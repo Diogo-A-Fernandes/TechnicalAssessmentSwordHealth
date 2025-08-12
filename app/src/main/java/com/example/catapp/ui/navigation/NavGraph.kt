@@ -14,6 +14,7 @@ import androidx.navigation.compose.*
 import com.example.catapp.ui.screens.FavouritesScreen
 import com.example.catapp.ui.screens.HomeScreen
 import com.example.catapp.viewmodel.FavoritesViewModel
+import com.example.catapp.viewmodel.HomeScreenViewModel
 
 // Define the screens for navigation
 sealed class Screen(val route: String, val label: String, val icon: ImageVector) {
@@ -25,6 +26,7 @@ sealed class Screen(val route: String, val label: String, val icon: ImageVector)
 fun NavGraph() {
     val navController = rememberNavController()
     val favoritesViewModel: FavoritesViewModel = viewModel()
+    val homeScreenViewModel : HomeScreenViewModel = viewModel()
     val screens = listOf(Screen.Home, Screen.Favourites)
 
     // Scaffold with bottom navigation bar
@@ -64,7 +66,7 @@ fun NavGraph() {
         ) {
             // Home screen route
             composable(Screen.Home.route) {
-                HomeScreen(favoritesViewModel = favoritesViewModel, navController = navController)
+                HomeScreen(favoritesViewModel = favoritesViewModel, homeScreenViewModel = homeScreenViewModel, navController = navController)
             }
 
             // Favourites list screen route
