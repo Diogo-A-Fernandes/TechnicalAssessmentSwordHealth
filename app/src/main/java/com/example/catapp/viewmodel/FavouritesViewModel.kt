@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel
 
 class FavoritesViewModel : ViewModel() {
 
-    private val _favoriteIds = mutableStateListOf<Int>()
-    val favoriteIds: List<Int> get() = _favoriteIds
+    private val _favoriteIds = mutableStateListOf<String>()
+    val favoriteIds: List<String> get() = _favoriteIds
 
-    fun toggleFavorite(id: Int) {
+    fun toggleFavorite(id: String) {
         if (_favoriteIds.contains(id)) {
             _favoriteIds.remove(id)
         } else {
@@ -16,5 +16,5 @@ class FavoritesViewModel : ViewModel() {
         }
     }
 
-    fun isFavorite(id: Int): Boolean = _favoriteIds.contains(id)
+    fun isFavorite(id: String): Boolean = _favoriteIds.contains(id)
 }
