@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitInstance {
 
     // Base URL for the Rick and Morty API
-    private const val baseUrl = " https://api.thecatapi.com/v1/images/search"
+    private const val baseUrl = " https://api.thecatapi.com/v1/"
 
     /**
      * Creates and configures the Retrofit instance.

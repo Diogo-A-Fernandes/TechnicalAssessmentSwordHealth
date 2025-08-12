@@ -1,6 +1,6 @@
 package com.example.catapp.networking.api
 
-import com.example.catapp.networking.model.Cat
+import com.example.catapp.networking.model.Breed
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Url
@@ -17,8 +17,8 @@ interface TheCatApi {
      * Retrieves a paginated list of characters from the API.
      * Endpoint: GET /character
      */
-    @GET("")
-    suspend fun getCats(): Cat
+    @GET("breeds")
+    suspend fun getBreeds(): List<Breed>
 
     /**
      * Retrieves characters from a full URL (used for pagination).
