@@ -18,13 +18,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 
 data class Item(
-    val id: Int, val name: String
+    val id: String, // mudou para String
+    val name: String
 )
 
 @Composable
 fun FavouritesScreen(
-    favoritesViewModel: FavoritesViewModel, navController: NavController) {
-    val allItems = List(20) { Item(it, "Item #$it") }
+    favoritesViewModel: FavoritesViewModel, navController: NavController
+) {
+    // Criar lista de itens com id como String
+    val allItems = List(20) { Item(it.toString(), "Item #$it") }
+
+    // Filtrar favoritos com id String
     val favorites = allItems.filter { favoritesViewModel.isFavorite(it.id) }
 
     if (favorites.isEmpty()) {
