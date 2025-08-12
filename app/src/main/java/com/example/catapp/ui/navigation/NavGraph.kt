@@ -71,7 +71,7 @@ fun NavGraph() {
 
             // Favourites list screen route
             composable(Screen.Favourites.route) {
-                FavouritesScreen(navController = navController, favoritesViewModel = favoritesViewModel)
+                FavouritesScreen(navController = navController, homeScreenViewModel = homeScreenViewModel,favoritesViewModel = favoritesViewModel)
             }
 
             }

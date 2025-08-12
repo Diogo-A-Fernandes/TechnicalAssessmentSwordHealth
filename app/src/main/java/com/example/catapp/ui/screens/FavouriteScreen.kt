@@ -16,27 +16,15 @@ import androidx.navigation.NavController
 import com.example.catapp.ui.components.BreedCard
 import com.example.catapp.viewmodel.HomeScreenViewModel
 
-data class Item(
-    val id: String,
-    val name: String
-)
-
 @Composable
 fun FavouritesScreen(
     favoritesViewModel: FavoritesViewModel,
     homeScreenViewModel: HomeScreenViewModel,
     navController: NavController
 ) {
-<<<<<<< Updated upstream
     val breeds by homeScreenViewModel.breeds.collectAsState()
 
-    // Filtra só as raças que estão na lista de favoritos
     val favorites = breeds.filter { favoritesViewModel.isFavorite(it.id) }
-=======
-    val allItems = List(20) { Item(it.toString(), "Item #$it") }
-
-    val favorites = allItems.filter { favoritesViewModel.isFavorite(it.id) }
->>>>>>> Stashed changes
 
     if (favorites.isEmpty()) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -52,52 +40,12 @@ fun FavouritesScreen(
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-<<<<<<< Updated upstream
         items(favorites) { breed ->
             BreedCard(
                 breed = breed,
                 favoritesViewModel = favoritesViewModel,
                 onClick = {  }
             )
-=======
-        items(favorites) { item ->
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(150.dp),
-                elevation = CardDefaults.cardElevation(4.dp)
-            ) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp)
-                    ) {
-                        Text(
-                            text = item.name,
-                            fontSize = 18.sp,
-                            modifier = Modifier.weight(1f),
-                            textAlign = TextAlign.Center
-                        )
-                    }
-
-                    IconToggleButton(
-                        checked = true,
-                        onCheckedChange = { _ ->
-                            favoritesViewModel.toggleFavorite(item.id)
-                        }, modifier = Modifier
-                            .align(Alignment.TopEnd)
-                            .padding(8.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.Star,
-                            contentDescription = "Remove from favorites",
-                            tint = Color.Yellow
-                        )
-                    }
-                }
-            }
->>>>>>> Stashed changes
         }
     }
 }
