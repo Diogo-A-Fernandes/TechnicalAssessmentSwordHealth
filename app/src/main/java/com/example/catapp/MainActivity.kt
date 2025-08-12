@@ -28,13 +28,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}data class Cat(
-    val id: String,
-    val url: String,
-    val width: Int,
-    val height: Int
-)
-
+}
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
