@@ -29,5 +29,5 @@ object RetrofitInstance {
      * Provides a singleton instance of the API interface
      * so it can be used throughout the app for network requests.
      */
-    val rickAndMortyApi: RickAndMortyApi = getInstance().create(RickAndMortyApi::class.java)
+    val theCatApi: TheCatApi = getInstance().create(TheCatApi::class.java)
 }
