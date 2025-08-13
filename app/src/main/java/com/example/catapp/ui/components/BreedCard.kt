@@ -15,6 +15,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconToggleButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,19 +27,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.catapp.networking.model.Breed
+import com.example.catapp.ui.utils.lifeSpanFormatter
 import com.example.catapp.viewmodel.FavoritesViewModel
-
-
 @Composable
 fun BreedCard(
     breed: Breed,
     favoritesViewModel: FavoritesViewModel,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    showLifeSpan: Boolean = false
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(220.dp)
+            .height(240.dp)
             .clickable { onClick() },
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
@@ -77,10 +78,16 @@ fun BreedCard(
 
                 Text(
                     text = breed.name ?: "Unknown",
-                    fontSize = 18.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
+                    fontSize = 18.sp
                 )
+
+                if (showLifeSpan && !breed.life_span.isNullOrBlank()) {
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "Life span: ${lifeSpanFormatter(breed.life_span)} years",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
             }
 
             val isFav = favoritesViewModel.isFavorite(breed.id)
