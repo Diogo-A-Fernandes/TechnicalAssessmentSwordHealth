@@ -1,5 +1,7 @@
 package com.example.catapp.ui.components
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.StarOutline
@@ -29,6 +32,7 @@ import coil.compose.AsyncImage
 import com.example.catapp.networking.model.Breed
 import com.example.catapp.ui.utils.lifeSpanFormatter
 import com.example.catapp.viewmodel.FavoritesViewModel
+
 @Composable
 fun BreedCard(
     breed: Breed,
@@ -39,15 +43,16 @@ fun BreedCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(240.dp)
+            .height(300.dp)
             .clickable { onClick() },
-        elevation = CardDefaults.cardElevation(4.dp)
+        elevation = CardDefaults.cardElevation(4.dp),
+        border = BorderStroke(1.dp, Color.Black)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(8.dp),
+                    .padding(top = 50.dp, start = 8.dp, end = 8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 val imageUrl = breed.reference_image_id?.let {
@@ -61,7 +66,7 @@ fun BreedCard(
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(140.dp)
+                            .height(180.dp)
                     )
                 } else {
                     Box(
@@ -98,12 +103,13 @@ fun BreedCard(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .padding(8.dp)
+
             ) {
                 if (isFav) {
                     Icon(
                         imageVector = Icons.Filled.Star,
                         contentDescription = "Favorite",
-                        tint = Color.Yellow
+                        tint = Color(0xFFFFD700)
                     )
                 } else {
                     Icon(
