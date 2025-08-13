@@ -40,11 +40,13 @@ fun HomeScreen(
                 Text("Loading breeds...")
             }
         }
+
         errorMessage != null -> {
             Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text(text = errorMessage ?: "Unknown error")
             }
         }
+
         else -> {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
@@ -57,7 +59,10 @@ fun HomeScreen(
                     BreedCard(
                         breed = breed,
                         favoritesViewModel = favoritesViewModel,
-                        onClick = { navController.navigate("breedDetails/${breed.id}") }
+                        showLifeSpan = false,
+                        onClick = {
+                            navController.navigate("breedDetails/${breed.id}")
+                        }
                     )
                 }
             }
