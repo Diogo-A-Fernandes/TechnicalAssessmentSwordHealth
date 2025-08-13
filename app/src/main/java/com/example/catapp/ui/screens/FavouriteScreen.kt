@@ -44,7 +44,9 @@ fun FavouritesScreen(
             BreedCard(
                 breed = breed,
                 favoritesViewModel = favoritesViewModel,
-                onClick = {  }
+                showLifeSpan = true,
+                onClick = { navController.navigate("breedDetails/${breed.id}")
+                }
             )
         }
     }
