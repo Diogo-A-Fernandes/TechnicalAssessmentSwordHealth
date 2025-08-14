@@ -1,17 +1,17 @@
 package com.example.catapp.networking.model
 
 data class Cat(
-    val id: String,
-    val url: String,
-    val breeds: List<Breed>,
-    val width: Int,
-    val height: Int
+    val id: String?,
+    val url: String?,
+    val breeds: List<Breed>?,
+    val width: Int?,
+    val height: Int?
 )
 
 data class Breed(
-    val weight: Weight,
-    val id: String,
-    val name: String,
+    val weight: Weight?,
+    val id: String?,
+    val name: String?,
     val cfa_url: String?,
     val vetstreet_url: String?,
     val vcahospitals_url: String?,
@@ -49,6 +49,6 @@ data class Breed(
 )
 
 data class Weight(
-    val imperial: String,
-    val metric: String
+    val imperial: String?,
+    val metric: String?
 )
