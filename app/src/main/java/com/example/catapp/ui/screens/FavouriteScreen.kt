@@ -24,7 +24,8 @@ fun FavouritesScreen(
 ) {
     val breeds by homeScreenViewModel.breeds.collectAsState()
 
-    val favorites = breeds.filter { favoritesViewModel.isFavorite(it.id) }
+    val favorites = breeds
+        .filter { it.id != null && favoritesViewModel.isFavorite(it.id) }
 
     if (favorites.isEmpty()) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -41,12 +42,12 @@ fun FavouritesScreen(
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         items(favorites) { breed ->
+            val breedId = breed.id!!
             BreedCard(
                 breed = breed,
                 favoritesViewModel = favoritesViewModel,
                 showLifeSpan = true,
-                onClick = { navController.navigate("breedDetails/${breed.id}")
-                }
+                onClick = { navController.navigate("breedDetails/$breedId") }
             )
         }
     }
