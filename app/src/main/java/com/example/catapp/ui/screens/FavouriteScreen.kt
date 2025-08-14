@@ -24,8 +24,7 @@ fun FavouritesScreen(
 ) {
     val breeds by homeScreenViewModel.breeds.collectAsState()
 
-    val favorites = breeds
-        .filter { it.id != null && favoritesViewModel.isFavorite(it.id) }
+    val favorites = favoritesViewModel.getFavoriteBreeds(breeds)
 
     if (favorites.isEmpty()) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {

@@ -2,6 +2,7 @@ package com.example.catapp.viewmodel
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
+import com.example.catapp.networking.model.Breed
 
 class FavoritesViewModel : ViewModel() {
 
@@ -17,4 +18,9 @@ class FavoritesViewModel : ViewModel() {
     }
 
     fun isFavorite(id: String): Boolean = _favoriteIds.contains(id)
+
+    fun getFavoriteBreeds(breeds: List<Breed>): List<Breed> {
+        return breeds.filter { it.id != null && isFavorite(it.id) }
+    }
+
 }

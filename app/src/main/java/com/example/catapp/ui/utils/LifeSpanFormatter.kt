@@ -4,7 +4,9 @@ fun lifeSpanFormatter(lifeSpan: String?): String {
     if (lifeSpan.isNullOrBlank()) return "Unknown"
 
     val parts = lifeSpan.split("-").map { it.trim() }
-    val min = parts.firstOrNull() ?: return "Unknown"
+    val min = parts.firstOrNull()?.takeIf { it.isNotEmpty() } ?: return "Unknown"
 
     return min
 }
+
+
