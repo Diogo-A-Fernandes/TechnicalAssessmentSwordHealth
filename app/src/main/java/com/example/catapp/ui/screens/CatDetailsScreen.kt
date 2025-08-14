@@ -70,7 +70,6 @@ fun CatDetailsScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .verticalScroll(rememberScrollState())
                         .padding(innerPadding)
                         .padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -110,14 +109,14 @@ fun CatDetailsScreen(
 
                     Text(
                         text = "Temperament: ${breed.temperament ?: "Unknown"}",
-                        style = MaterialTheme.typography.bodyMedium
+                        style = MaterialTheme.typography.bodyLarge
                     )
 
                     Spacer(Modifier.height(8.dp))
 
                     Text(
                         text = breed.description ?: "No description available",
-                        style = MaterialTheme.typography.bodyMedium
+                        style = MaterialTheme.typography.bodyLarge
                     )
 
                     Spacer(Modifier.height(16.dp))
