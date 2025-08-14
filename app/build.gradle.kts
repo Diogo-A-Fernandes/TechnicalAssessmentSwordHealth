@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
 }
 
 android {
@@ -23,8 +24,7 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
     }
@@ -41,6 +41,7 @@ android {
     }
 }
 
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -51,6 +52,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.media3.database)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -59,24 +61,31 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-        // Retrofit for HTTP and JSON
-        implementation("com.squareup.retrofit2:retrofit:2.9.0")
-        implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    // Retrofit for HTTP and JSON
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
-        // Coil for images Compose
-        implementation("io.coil-kt:coil-compose:2.4.0")
+    // Coil for images Compose
+    implementation("io.coil-kt:coil-compose:2.4.0")
 
-        // Jetpack Compose Material and icons
-        implementation("androidx.compose.material:material:1.6.1")
-        implementation("androidx.compose.material:material-icons-extended:1.6.1")
+    // Jetpack Compose Material and icons
+    implementation("androidx.compose.material:material:1.6.1")
+    implementation("androidx.compose.material:material-icons-extended:1.6.1")
 
-        // Navigation Compose
-        implementation("androidx.navigation:navigation-compose:2.5.3")
+    // Navigation Compose
+    implementation("androidx.navigation:navigation-compose:2.5.3")
 
-        // Lifecycle ViewModel whit Compose
-        implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    // Lifecycle ViewModel whit Compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
 
-        // Kotlin Coroutines
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    // Kotlin Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+
+        implementation("androidx.room:room-runtime:2.6.1")
+        kapt("androidx.room:room-compiler:2.6.1")
+        implementation("androidx.room:room-ktx:2.6.1")
 }
+
+
