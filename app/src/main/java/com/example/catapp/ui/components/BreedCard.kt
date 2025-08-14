@@ -89,13 +89,14 @@ fun BreedCard(
                 if (showLifeSpan && !breed.life_span.isNullOrBlank()) {
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "Life span: ${lifeSpanFormatter(breed.life_span)} years",
+                        text = "Life span: ${lifeSpanFormatter(breed.life_span ?: "")} years",
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
             }
 
-            val isFav = favoritesViewModel.isFavorite(breed.id)
+            breed.id?.let { safeId ->
+                val isFav = favoritesViewModel.isFavorite(safeId)
 
             IconToggleButton(
                 checked = isFav,
@@ -117,6 +118,26 @@ fun BreedCard(
                         contentDescription = "Not favorite",
                         tint = Color.Gray
                     )
+                IconToggleButton(
+                    checked = isFav,
+                    onCheckedChange = { favoritesViewModel.toggleFavorite(safeId) },
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(8.dp)
+                ) {
+                    if (isFav) {
+                        Icon(
+                            imageVector = Icons.Filled.Star,
+                            contentDescription = "Favorite",
+                            tint = Color(0xFFFFD700)
+                        )
+                    } else {
+                        Icon(
+                            imageVector = Icons.Outlined.StarOutline,
+                            contentDescription = "Not favorite",
+                            tint = Color.Black
+                        )
+                    }
                 }
             }
         }
