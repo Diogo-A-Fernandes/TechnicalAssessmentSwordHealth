@@ -29,7 +29,7 @@ fun CatDetailsScreen(
     val isLoading by homeScreenViewModel.isLoading.collectAsState()
     val errorMessage by homeScreenViewModel.errorMessage.collectAsState()
     val breed = breeds.find { it.id == breedId }
-    val isFav = breed?.let { favoritesViewModel.isFavorite(it.id) } ?: false
+    val isFav = breed?.id?.let { favoritesViewModel.isFavorite(it) } ?: false
 
     Scaffold(
         topBar = {
@@ -41,14 +41,7 @@ fun CatDetailsScreen(
     ) { innerPadding ->
         when {
             isLoading -> {
-                Box(
-                    Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("Loading breed details...")
-                }
+                CircularProgressIndicator(modifier = Modifier.padding(16.dp))
             }
 
             errorMessage != null -> {
@@ -90,6 +83,13 @@ fun CatDetailsScreen(
                                 .fillMaxWidth()
                                 .height(250.dp)
                         )
+                    } ?: Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(250.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("No image")
                     }
 
                     Spacer(Modifier.height(16.dp))
@@ -122,20 +122,22 @@ fun CatDetailsScreen(
 
                     Spacer(Modifier.height(16.dp))
 
-                    Button(
-                        onClick = { breed.id.let { favoritesViewModel.toggleFavorite(it) } },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (isFav) Color(0xFFFFC107) else Color.Gray
-                        ),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Icon(
-                            imageVector = if (isFav) Icons.Filled.Star else Icons.Outlined.StarOutline,
-                            contentDescription = if (isFav) "Remove from favorites" else "Add to favorites",
-                            tint = Color.Black
-                        )
-                        Spacer(Modifier.width(8.dp))
-                        Text(if (isFav) "Remove from favourites" else "Add to favourites")
+                    breed.id?.let { safeId ->
+                        Button(
+                            onClick = { favoritesViewModel.toggleFavorite(safeId) },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.Gray
+                            ),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Icon(
+                                imageVector = if (isFav) Icons.Filled.Star else Icons.Outlined.StarOutline,
+                                contentDescription = if (isFav) "Remove from favorites" else "Add to favorites",
+                                tint = Color(0xFFFFC107)
+                            )
+                            Spacer(Modifier.width(8.dp))
+                            Text(if (isFav) "Remove from favourites" else "Add to favourites")
+                        }
                     }
                 }
             }
