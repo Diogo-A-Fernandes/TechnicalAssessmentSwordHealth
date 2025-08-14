@@ -1,24 +1,23 @@
 package com.example.catapp.viewmodel
 
-import android.util.Log
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.catapp.data.database.DatabaseProvider
+import com.example.catapp.data.repository.CatBreedRepository
 import com.example.catapp.networking.api.RetrofitInstance
 import com.example.catapp.networking.model.Breed
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class HomeScreenViewModel : ViewModel() {
+class HomeScreenViewModel(application: Application) : AndroidViewModel(application) {
 
-    // API service instance
-    private val api = RetrofitInstance.theCatApi
+    private val repository: CatBreedRepository
 
-    // State to hold the list of breeds
     private val _breeds = MutableStateFlow<List<Breed>>(emptyList())
     val breeds = _breeds.asStateFlow()
 
-    // Loading and error states (optional)
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
 
@@ -26,6 +25,11 @@ class HomeScreenViewModel : ViewModel() {
     val errorMessage = _errorMessage.asStateFlow()
 
     init {
+        val db = DatabaseProvider.getDatabase(application)
+        repository = CatBreedRepository(
+            api = RetrofitInstance.theCatApi,
+            dao = db.catBreedDao()
+        )
         fetchBreeds()
     }
 
@@ -33,11 +37,9 @@ class HomeScreenViewModel : ViewModel() {
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                val response = api.getBreeds()
-                _breeds.value = response
+                _breeds.value = repository.getBreeds()
             } catch (e: Exception) {
-                Log.e("HomeScreenViewModel", "Error loading breeds", e)
-                _errorMessage.value = "Failed to load breeds"
+                _errorMessage.value = "Error uploading"
             } finally {
                 _isLoading.value = false
             }
