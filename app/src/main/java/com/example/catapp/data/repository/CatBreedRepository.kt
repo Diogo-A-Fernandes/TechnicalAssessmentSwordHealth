@@ -10,13 +10,13 @@ class CatBreedRepository(
     private val api: TheCatApi,
     private val dao: CatBreedDao
 ) {
-
-    suspend fun getBreeds(): List<Breed> {
+    suspend fun getBreeds(page: Int, limit: Int = 10): List<Breed> {
         val cachedBreeds = dao.getAllCatsList()
-        return if (cachedBreeds.isNotEmpty()) {
+
+        return if (cachedBreeds.isNotEmpty() && page == 0) {
             cachedBreeds.map { it.toBreed() }
         } else {
-            val breedsFromApi = api.getBreeds()
+            val breedsFromApi = api.getBreeds(page, limit)
             dao.insertAll(breedsFromApi.map { it.toEntity() })
             breedsFromApi
         }
