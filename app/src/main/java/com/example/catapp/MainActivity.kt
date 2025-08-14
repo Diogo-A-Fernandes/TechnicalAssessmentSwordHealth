@@ -7,7 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import com.example.catapp.ui.navigation.NavGraph
 import com.example.catapp.ui.theme.CatAppTheme
 
-
 // MainActivity is the entry point of the app, hosting the Compose UI content
 class MainActivity : ComponentActivity() {
 
@@ -18,7 +17,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         // Set the content view with Jetpack Compose UI
-        setContent {
+      setContent {
             // Apply the custom theme for the app
             CatAppTheme {
                 // Launch the navigation graph which handles navigation and screen logic
