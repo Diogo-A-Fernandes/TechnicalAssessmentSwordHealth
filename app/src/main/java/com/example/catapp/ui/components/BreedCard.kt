@@ -98,32 +98,13 @@ fun BreedCard(
             breed.id?.let { safeId ->
                 val isFav = favoritesViewModel.isFavorite(safeId)
 
-            IconToggleButton(
-                checked = isFav,
-                onCheckedChange = { favoritesViewModel.toggleFavorite(breed.id) },
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(8.dp)
-
-            ) {
-                if (isFav) {
-                    Icon(
-                        imageVector = Icons.Filled.Star,
-                        contentDescription = "Favorite",
-                        tint = Color(0xFFFFD700)
-                    )
-                } else {
-                    Icon(
-                        imageVector = Icons.Outlined.StarOutline,
-                        contentDescription = "Not favorite",
-                        tint = Color.Gray
-                    )
                 IconToggleButton(
                     checked = isFav,
-                    onCheckedChange = { favoritesViewModel.toggleFavorite(safeId) },
+                    onCheckedChange = { favoritesViewModel.toggleFavorite(breed.id) },
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(8.dp)
+
                 ) {
                     if (isFav) {
                         Icon(
@@ -135,8 +116,29 @@ fun BreedCard(
                         Icon(
                             imageVector = Icons.Outlined.StarOutline,
                             contentDescription = "Not favorite",
-                            tint = Color.Black
+                            tint = Color.Gray
                         )
+                        IconToggleButton(
+                            checked = isFav,
+                            onCheckedChange = { favoritesViewModel.toggleFavorite(safeId) },
+                            modifier = Modifier
+                                .align(Alignment.TopEnd)
+                                .padding(8.dp)
+                        ) {
+                            if (isFav) {
+                                Icon(
+                                    imageVector = Icons.Filled.Star,
+                                    contentDescription = "Favorite",
+                                    tint = Color(0xFFFFD700)
+                                )
+                            } else {
+                                Icon(
+                                    imageVector = Icons.Outlined.StarOutline,
+                                    contentDescription = "Not favorite",
+                                    tint = Color.Black
+                                )
+                            }
+                        }
                     }
                 }
             }
