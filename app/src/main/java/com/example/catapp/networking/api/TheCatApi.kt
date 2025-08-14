@@ -2,8 +2,7 @@ package com.example.catapp.networking.api
 
 import com.example.catapp.networking.model.Breed
 import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Url
+import retrofit2.http.Query
 
 /**
  * Retrofit API interface defining endpoints to interact with
@@ -18,36 +17,9 @@ interface TheCatApi {
      * Endpoint: GET /character
      */
     @GET("breeds")
-    suspend fun getBreeds(): List<Breed>
+    suspend fun getBreeds(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+    ): List<Breed>
 
-    /**
-     * Retrieves characters from a full URL (used for pagination).
-     * This allows fetching the next pages using the URL provided by the API.
-     *
-     * @param url The full URL for the character list endpoint with pagination parameters.
-
-    @GET
-    suspend fun getCharactersByUrl(@Url url: String): CharacterResponse
-
-    /**
-     * Retrieves detailed information for a specific character by their ID.
-     *
-     * @param characterId The ID of the character to retrieve.
-    */
-    @GET("character/{id}")
-    suspend fun getCharacterById(
-    @Path("id") characterId: Int
-    ): Character
-
-    //---------------------------- Episodes -------------------------
-
-    /**
-     * Retrieves detailed information for a specific episode by its full URL.
-     *
-     * @param url The full URL of the episode to retrieve.
-    */
-    @GET
-    suspend fun getEpisodeByUrl(@Url url: String): Episode
-    }
-     */
 }
