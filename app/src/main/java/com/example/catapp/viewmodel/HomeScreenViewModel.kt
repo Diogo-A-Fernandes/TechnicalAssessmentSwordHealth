@@ -24,6 +24,10 @@ class HomeScreenViewModel(application: Application) : AndroidViewModel(applicati
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage = _errorMessage.asStateFlow()
 
+    private var currentPage = 0
+    private val pageSize = 10
+    private var endReached = false
+
     init {
         val db = DatabaseProvider.getDatabase(application)
         repository = CatBreedRepository(
@@ -33,13 +37,24 @@ class HomeScreenViewModel(application: Application) : AndroidViewModel(applicati
         fetchBreeds()
     }
 
+    fun fetchBreedsIfNeeded() {
+        if (_isLoading.value || endReached) return
+        fetchBreeds()
+    }
+
     private fun fetchBreeds() {
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                _breeds.value = repository.getBreeds()
+                val newBreeds = repository.getBreeds(page = currentPage, limit = pageSize)
+                if (newBreeds.isEmpty()) {
+                    endReached = true
+                } else {
+                    _breeds.value = _breeds.value + newBreeds
+                    currentPage++
+                }
             } catch (e: Exception) {
-                _errorMessage.value = "Error uploading"
+                _errorMessage.value = "Error loading breeds"
             } finally {
                 _isLoading.value = false
             }

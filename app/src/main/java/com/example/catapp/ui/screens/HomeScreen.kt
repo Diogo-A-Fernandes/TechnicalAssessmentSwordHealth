@@ -2,8 +2,9 @@ package com.example.catapp.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,31 +26,39 @@ fun HomeScreen(
     val isLoading by homeScreenViewModel.isLoading.collectAsState()
     val errorMessage by homeScreenViewModel.errorMessage.collectAsState()
 
-    // Search query state
     var query by remember { mutableStateOf("") }
 
-    // Filter characters by name based on query
     val filteredBreeds = breeds.filter { breed ->
         breed.name?.contains(query, ignoreCase = true) == true
     }
 
-    when {
-        isLoading -> {
-            CircularProgressIndicator(modifier = Modifier.padding(16.dp))
-        }
+    Column(modifier = Modifier.fillMaxSize()) {
 
-        errorMessage != null -> {
-            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(text = errorMessage ?: "Unknown error")
+        SearchBar(
+            query = query,
+            onQueryChanged = { query = it }
+        )
+
+        when {
+            errorMessage != null -> {
+                Box(
+                    Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(text = errorMessage ?: "Unknown error")
+                }
             }
-        }
 
-        else -> {
-            Column {
-                SearchBar(
-                    query = query,
-                    onQueryChanged = { query = it })
+            breeds.isEmpty() && isLoading -> {
+                Box(
+                    Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
 
+            else -> {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
                     contentPadding = PaddingValues(8.dp),
@@ -57,7 +66,8 @@ fun HomeScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    items(filteredBreeds) { breed ->
+                    itemsIndexed(filteredBreeds) { index, breed ->
+
                         BreedCard(
                             breed = breed,
                             favoritesViewModel = favoritesViewModel,
@@ -66,6 +76,25 @@ fun HomeScreen(
                                 navController.navigate("breedDetails/${breed.id}")
                             }
                         )
+
+                        if (index >= filteredBreeds.size - 4) {
+                            LaunchedEffect(Unit) {
+                                homeScreenViewModel.fetchBreedsIfNeeded()
+                            }
+                        }
+                    }
+
+                    if (isLoading) {
+                        item(span = { GridItemSpan(maxLineSpan) }) {
+                            Box(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CircularProgressIndicator()
+                            }
+                        }
                     }
                 }
             }
