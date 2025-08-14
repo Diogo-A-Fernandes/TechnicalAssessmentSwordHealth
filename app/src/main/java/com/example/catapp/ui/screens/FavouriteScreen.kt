@@ -1,11 +1,10 @@
 package com.example.catapp.ui.screens
 
 import androidx.compose.runtime.Composable
-import com.example.catapp.viewmodel.FavoritesViewModel
+import com.example.catapp.viewmodel.FavouritesViewModel
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -15,18 +14,19 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.catapp.ui.components.BreedCard
 import com.example.catapp.viewmodel.HomeScreenViewModel
+import androidx.compose.foundation.lazy.grid.items
 
 @Composable
 fun FavouritesScreen(
-    favoritesViewModel: FavoritesViewModel,
+    favouritesViewModel: FavouritesViewModel,
     homeScreenViewModel: HomeScreenViewModel,
     navController: NavController
 ) {
     val breeds by homeScreenViewModel.breeds.collectAsState()
 
-    val favorites = favoritesViewModel.getFavoriteBreeds(breeds)
+    val favourites = favouritesViewModel.getFavouriteBreeds(breeds)
 
-    if (favorites.isEmpty()) {
+    if (favourites.isEmpty()) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text("No favourites yet")
         }
@@ -40,11 +40,11 @@ fun FavouritesScreen(
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        items(favorites) { breed ->
+        items(favourites) { breed ->
             val breedId = breed.id!!
             BreedCard(
                 breed = breed,
-                favoritesViewModel = favoritesViewModel,
+                favouritesViewModel = favouritesViewModel,
                 showLifeSpan = true,
                 onClick = { navController.navigate("breedDetails/$breedId") }
             )

@@ -12,14 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.catapp.ui.components.BreedCard
-import com.example.catapp.viewmodel.FavoritesViewModel
+import com.example.catapp.viewmodel.FavouritesViewModel
 import com.example.catapp.viewmodel.HomeScreenViewModel
 import com.example.catapp.ui.components.SearchBar
 
 @Composable
 fun HomeScreen(
     homeScreenViewModel: HomeScreenViewModel,
-    favoritesViewModel: FavoritesViewModel,
+    favoritesViewModel: FavouritesViewModel,
     navController: NavController
 ) {
     val breeds by homeScreenViewModel.breeds.collectAsState()
@@ -70,7 +70,7 @@ fun HomeScreen(
 
                         BreedCard(
                             breed = breed,
-                            favoritesViewModel = favoritesViewModel,
+                            favouritesViewModel = favoritesViewModel,
                             showLifeSpan = false,
                             onClick = {
                                 navController.navigate("breedDetails/${breed.id}")

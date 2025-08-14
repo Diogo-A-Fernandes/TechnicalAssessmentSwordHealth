@@ -15,21 +15,21 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.catapp.ui.components.CustomTopBar
-import com.example.catapp.viewmodel.FavoritesViewModel
+import com.example.catapp.viewmodel.FavouritesViewModel
 import com.example.catapp.viewmodel.HomeScreenViewModel
 
 @Composable
 fun CatDetailsScreen(
     breedId: String,
     homeScreenViewModel: HomeScreenViewModel,
-    favoritesViewModel: FavoritesViewModel,
+    favouritesViewModel: FavouritesViewModel,
     navController: NavController
 ) {
     val breeds by homeScreenViewModel.breeds.collectAsState()
     val isLoading by homeScreenViewModel.isLoading.collectAsState()
     val errorMessage by homeScreenViewModel.errorMessage.collectAsState()
     val breed = breeds.find { it.id == breedId }
-    val isFav = breed?.id?.let { favoritesViewModel.isFavorite(it) } ?: false
+    val isFav = breed?.id?.let { favouritesViewModel.isFavourite(it) } ?: false
 
     Scaffold(
         topBar = {
@@ -94,13 +94,6 @@ fun CatDetailsScreen(
                     Spacer(Modifier.height(16.dp))
 
                     Text(
-                        text = breed.name ?: "Unknown",
-                        style = MaterialTheme.typography.headlineMedium
-                    )
-
-                    Spacer(Modifier.height(8.dp))
-
-                    Text(
                         text = "Origin: ${breed.origin ?: "Unknown"}",
                         style = MaterialTheme.typography.bodyMedium
                     )
@@ -108,7 +101,7 @@ fun CatDetailsScreen(
                     Spacer(Modifier.height(8.dp))
 
                     Text(
-                        text = "Temperament: ${breed.temperament ?: "Unknown"}",
+                        text = "They are: ${breed.temperament ?: "Unknown"}",
                         style = MaterialTheme.typography.bodyLarge
                     )
 
@@ -123,7 +116,7 @@ fun CatDetailsScreen(
 
                     breed.id?.let { safeId ->
                         Button(
-                            onClick = { favoritesViewModel.toggleFavorite(safeId) },
+                            onClick = { favouritesViewModel.toggleFavourite(safeId) },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color.Gray
                             ),

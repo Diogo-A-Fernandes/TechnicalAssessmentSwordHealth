@@ -6,34 +6,34 @@ import org.junit.Test
 
 class FavoritesViewModelTest {
 
-    private lateinit var viewModel: FavoritesViewModel
+    private lateinit var viewModel: FavouritesViewModel
 
     @Before
     fun setup() {
-        viewModel = FavoritesViewModel()
+        viewModel = FavouritesViewModel()
     }
 
     @Test
     fun toggleFavorite_addsIdIfNotPresent() {
         val id = "123"
-        assertFalse(viewModel.isFavorite(id))
+        assertFalse(viewModel.isFavourite(id))
 
-        viewModel.toggleFavorite(id)
+        viewModel.toggleFavourite(id)
 
-        assertTrue(viewModel.isFavorite(id))
-        assertEquals(1, viewModel.favoriteIds.size)
-        assertEquals(id, viewModel.favoriteIds[0])
+        assertTrue(viewModel.isFavourite(id))
+        assertEquals(1, viewModel.favouriteIds.size)
+        assertEquals(id, viewModel.favouriteIds[0])
     }
 
     @Test
     fun toggleFavorite_removesIdIfPresent() {
         val id = "123"
-        viewModel.toggleFavorite(id)
-        assertTrue(viewModel.isFavorite(id))
+        viewModel.toggleFavourite(id)
+        assertTrue(viewModel.isFavourite(id))
 
-        viewModel.toggleFavorite(id)
-        assertFalse(viewModel.isFavorite(id))
-        assertEquals(0, viewModel.favoriteIds.size)
+        viewModel.toggleFavourite(id)
+        assertFalse(viewModel.isFavourite(id))
+        assertEquals(0, viewModel.favouriteIds.size)
     }
 
     @Test
@@ -41,61 +41,61 @@ class FavoritesViewModelTest {
         val id1 = "123"
         val id2 = "456"
 
-        viewModel.toggleFavorite(id1)
+        viewModel.toggleFavourite(id1)
 
-        assertTrue(viewModel.isFavorite(id1))
-        assertFalse(viewModel.isFavorite(id2))
+        assertTrue(viewModel.isFavourite(id1))
+        assertFalse(viewModel.isFavourite(id2))
     }
 
     @Test
     fun toggleFavorite_addsMultipleIds() {
         val ids = listOf("1", "2", "3")
-        ids.forEach { viewModel.toggleFavorite(it) }
+        ids.forEach { viewModel.toggleFavourite(it) }
 
-        assertEquals(3, viewModel.favoriteIds.size)
-        assertTrue(viewModel.favoriteIds.containsAll(ids))
+        assertEquals(3, viewModel.favouriteIds.size)
+        assertTrue(viewModel.favouriteIds.containsAll(ids))
     }
 
     @Test
     fun toggleFavorite_removesOneFromMultiple() {
         val ids = listOf("1", "2", "3")
-        ids.forEach { viewModel.toggleFavorite(it) }
+        ids.forEach { viewModel.toggleFavourite(it) }
 
-        viewModel.toggleFavorite("2")
+        viewModel.toggleFavourite("2")
 
-        assertEquals(2, viewModel.favoriteIds.size)
-        assertTrue(viewModel.favoriteIds.containsAll(listOf("1", "3")))
-        assertFalse(viewModel.favoriteIds.contains("2"))
+        assertEquals(2, viewModel.favouriteIds.size)
+        assertTrue(viewModel.favouriteIds.containsAll(listOf("1", "3")))
+        assertFalse(viewModel.favouriteIds.contains("2"))
     }
 
     @Test
     fun toggleFavorite_doesNotDuplicateIds() {
         val id = "1"
-        viewModel.toggleFavorite(id)
-        viewModel.toggleFavorite(id)
-        viewModel.toggleFavorite(id)
+        viewModel.toggleFavourite(id)
+        viewModel.toggleFavourite(id)
+        viewModel.toggleFavourite(id)
 
-        assertEquals(1, viewModel.favoriteIds.size)
-        assertEquals(id, viewModel.favoriteIds[0])
+        assertEquals(1, viewModel.favouriteIds.size)
+        assertEquals(id, viewModel.favouriteIds[0])
     }
 
     @Test
     fun toggleFavorite_handlesEmptyString() {
         val id = ""
-        viewModel.toggleFavorite(id)
-        assertTrue(viewModel.isFavorite(id))
+        viewModel.toggleFavourite(id)
+        assertTrue(viewModel.isFavourite(id))
 
-        viewModel.toggleFavorite(id)
-        assertFalse(viewModel.isFavorite(id))
+        viewModel.toggleFavourite(id)
+        assertFalse(viewModel.isFavourite(id))
     }
 
     @Test
     fun toggleFavorite_complexSequence() {
-        viewModel.toggleFavorite("a")
-        viewModel.toggleFavorite("b")
-        viewModel.toggleFavorite("a")
-        viewModel.toggleFavorite("c")
+        viewModel.toggleFavourite("a")
+        viewModel.toggleFavourite("b")
+        viewModel.toggleFavourite("a")
+        viewModel.toggleFavourite("c")
 
-        assertEquals(listOf("b", "c"), viewModel.favoriteIds)
+        assertEquals(listOf("b", "c"), viewModel.favouriteIds)
     }
 }
